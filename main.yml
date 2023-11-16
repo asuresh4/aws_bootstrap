@@ -67,7 +67,7 @@ Resources:
     Properties:
       DeploymentGroupName: Staging
       AutoScalingGroups:
-        - !Ref ScalingGroup
+        - !GetAtt Staging.Outputs.ScalingGroup
       ApplicationName: !Ref DeploymentApplication
       DeploymentConfigName: CodeDeployDefault.AllAtOnce
       ServiceRoleArn: !GetAtt DeploymentRole.Arn
@@ -151,3 +151,11 @@ Resources:
       Parameters:
         EC2InstanceType: !Ref EC2InstanceType
         EC2AMI: !EC2AMI
+
+Outputs:
+
+  StagingLBEndpoint:
+    Description: The DNS name for the staging LB
+    Value: !GetAtt Staging.Outputs.LBEndpoint
+    Export:
+      Name: StagingLBEndpoint
