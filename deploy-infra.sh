@@ -24,7 +24,8 @@ aws cloudformation deploy \
   --no-fail-on-empty-changeset \
   --capabilities CAPABILITY_NAMED_IAM \
   --parameter-overrides \
-    CodePipelineBucket=$CODEPIPELINE_BUCKET
+    CodePipelineBucket=$CODEPIPELINE_BUCKET \
+    CloudFormationBucket=$CFN_BUCKET
 
 
 # Package CloudFormation templates into an S3 bucket
@@ -50,7 +51,7 @@ aws cloudformation deploy \
   --region $REGION  \
   --profile $CLI_PROFILE \
   --stack-name $STACK_NAME \
-  --template-file main.yml \
+  --template-file ./cfn_output/main.yml \
   --no-fail-on-empty-changeset \
   --capabilities CAPABILITY_NAMED_IAM \
   --parameter-overrides \
@@ -59,8 +60,7 @@ aws cloudformation deploy \
     GitHubRepo=$GH_REPO \
     GitHubBranch=$GH_BRANCH \
     GitHubPersonalAccessToken=$GH_ACCESS_TOKEN \
-    CodePipelineBucket=$CODEPIPELINE_BUCKET \
-    CloudFormationBucket=$CFN_BUCKET
+    CodePipelineBucket=$CODEPIPELINE_BUCKET
   
 
 if [ $? -eq 0 ]; then
